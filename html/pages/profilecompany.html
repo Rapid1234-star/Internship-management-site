@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Company Profile - Internship Portal</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+<nav>
+    <a href="dashboardcompany.html">Home</a>
+    <a href="login.html">Logout</a>
+  </nav>
+
+  <header>
+    <h2 class="section-heading">Company Profile</h2>
+  </header>
+
+  <main class="form-container">
+    <form id="/update_company_profile" method="POST">
+      <label for="company_name">Company Name</label>
+      <input type="text" id="company_name" name="company_name" placeholder="Enter company name" required />
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Enter company email" required />
+
+      <label for="phone">Phone Number</label>
+      <input type="text" id="phone" name="phone" placeholder="Enter phone number" />
+
+      <label for="location">Location</label>
+      <input type="text" id="location" name="location" placeholder="Enter location" />
+
+      <label for="description">Company Description</label>
+      <textarea id="description" name="description" rows="4" placeholder="Describe your company..."></textarea>
+
+      <button type="submit" class="btn">Update Profile</button>
+    </form>
+  </main>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

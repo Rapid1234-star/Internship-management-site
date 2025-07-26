@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Post New Internship</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/dashboardcompany.html">Home</a></li>
+            <li><a href="/profilecompany.html">Profile</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+    <h1 class="section-heading">Post New Internship</h1>
+    <div class="form-container">
+        <form action="/create_internship" method="POST" onsubmit="return validateForm()">
+            <label for="title">Internship Title:</label>
+            <input type="text" name="title" id="title">
+            <label for="location">Location:</label>
+            <input type="text" name="location" id="location">
+            <label for="type">Type:</label>
+            <input type="text" name="type" id="type">
+            <label for="skills">Required Skills:</label>
+            <input type="text" name="skills" id="skills">
+            <label for="salary">Salary:</label>
+            <input type="number" name="salary" id="salary" step="0.01">
+            <label for="duration">Duration:</label>
+            <input type="text" name="duration" id="duration">
+            <label for="deadline">Application Deadline:</label>
+            <input type="date" name="deadline" id="deadline">
+            <button type="submit">Submit Internship</button>
+        </form>
+        <p id="status" style="color: red;"></p>
+    </div>
+    <script src="/js/main.js"></script>
+    <script>
+        function validateForm() {
+            const fields = ['title', 'location', 'type', 'skills', 'salary', 'duration', 'deadline'];
+            const status = document.getElementById('status');
+            for (let field of fields) {
+                if (!document.getElementById(field).value) {
+                    status.textContent = 'All fields are required';
+                    return false;
+                }
+            }
+            if (isNaN(document.getElementById('salary').value) || document.getElementById('salary').value <= 0) {
+                status.textContent = 'Salary must be a positive number';
+                return false;
+            }
+            status.textContent = '';
+            return true;
+        }
+    </script>
+</body>
+</html>

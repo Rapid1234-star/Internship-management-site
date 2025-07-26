@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Applications</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <nav>
+        <a href="/dashboardcompany.html">Home</a>
+        <a href="/profilecompany.html">Profile</a>
+        <a href="/logout">Logout</a>
+    </nav>
+
+    <h1>Internship Applications</h1>
+
+    <div id="search-form">
+        <form id="application-search-form">
+            <label>Search by Student Name: <input type="text" name="search"></label>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <div id="application-list">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Internship</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="application-table-body"></tbody>
+        </table>
+    </div>
+
+    <script>
+        function loadApplications() {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', '/list_applications_company', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const applications = JSON.parse(xhr.responseText);
+                    const tableBody = document.getElementById('application-table-body');
+                    tableBody.innerHTML = '';
+                    applications.forEach(app => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${app.student_name}</td>
+                            <td>${app.title}</td>
+                            <td>${app.email}</td>
+                            <td>${app.status}</td>
+                            <td>
+                                <button onclick="updateStatus(${app.application_id}, 'Accepted')">Accept</button>
+                                <button onclick="updateStatus(${app.application_id}, 'Rejected')">Reject</button>
+                                <button onclick="deleteApplication(${app.application_id})">Delete</button>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                } else if (xhr.readyState === 4) {
+                    alert('Error loading applications');
+                }
+            };
+            xhr.send();
+        }
+
+        function updateStatus(applicationId, status) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/update_status', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    alert('Status updated!');
+                    loadApplications();
+                } else if (xhr.readyState === 4) {
+                    alert('Error updating status');
+                }
+            };
+            xhr.send(`application_id=${applicationId}&status=${status}`);
+        }
+
+        function deleteApplication(applicationId) {
+            if (!confirm('Are you sure you want to delete this application?')) return;
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/delete_application', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    alert('Application deleted!');
+                    loadApplications();
+                } else if (xhr.readyState === 4) {
+                    alert('Error deleting application');
+                }
+            };
+            xhr.send(`application_id=${applicationId}`);
+        }
+
+        document.getElementById('application-search-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const searchParams = new URLSearchParams();
+            for (const [key, value] of formData) {
+                if (value) searchParams.append(key, value);
+            }
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/search_applications', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const applications = JSON.parse(xhr.responseText);
+                    const tableBody = document.getElementById('application-table-body');
+                    tableBody.innerHTML = '';
+                    applications.forEach(app => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${app.student_name}</td>
+                            <td>${app.title}</td>
+                            <td>${app.email}</td>
+                            <td>${app.status}</td>
+                            <td>
+                                <button onclick="updateStatus(${app.application_id}, 'Accepted')">Accept</button>
+                                <button onclick="updateStatus(${app.application_id}, 'Rejected')">Reject</button>
+                                <button onclick="deleteApplication(${app.application_id})">Delete</button>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                } else if (xhr.readyState === 4) {
+                    alert('Error searching applications');
+                }
+            };
+            xhr.send(searchParams.toString());
+        });
+
+        window.onload = loadApplications;
+    </script>
+</body>
+</html>

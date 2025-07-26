@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Applications</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/dashboardstudent.html">Home</a></li>
+            <li><a href="/profilestudent.html">Profile</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+    <h1 class="section-heading">My Applications</h1>
+    <div id="applicationList" class="internship-list"></div>
+    <script src="/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('/list_applications_student')
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.json();
+                })
+                .then(data => {
+                    const list = document.getElementById('applicationList');
+                    if (data.length === 0) {
+                        list.innerHTML = '<p>No applications found</p>';
+                    } else {
+                        list.innerHTML = data.map(app => `
+                            <div class="internship-card">
+                                <h3>${app.title}</h3>
+                                <p>Company: ${app.company_name}</p>
+                                <p>Applied On: ${app.applied_on}</p>
+                                <p>Status: ${app.status}</p>
+                            </div>
+                        `).join('');
+                    }
+                })
+                .catch(error => {
+                    if (error.message.includes('Network response')) {
+                        alert('Error loading applications: Please check your session or try again');
+                    } else {
+                        alert('Error loading applications: ' + error.message);
+                    }
+                });
+        });
+    </script>
+</body>
+</html>

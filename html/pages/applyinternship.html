@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Apply for Internship</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/dashboardstudent.html">Home</a></li>
+            <li><a href="/profilestudent.html">Profile</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+    <h1 class="section-heading">Apply for Internship</h1>
+    <div class="form-container">
+        <form action="/apply_internship" method="POST" onsubmit="return validateForm()">
+            <input type="hidden" name="internship_id" id="internship_id">
+            <label for="resume">Resume:</label>
+            <input type="file" name="resume" id="resume" required>
+            <button type="submit">Submit Application</button>
+        </form>
+    </div>
+    <script src="/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            document.getElementById('internship_id').value = urlParams.get('internship_id') || '';
+        });
+
+        function validateForm() {
+            const resume = document.getElementById('resume').value;
+            const internshipId = document.getElementById('internship_id').value;
+            if (!resume || !internshipId) {
+                alert('Resume and internship ID are required');
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

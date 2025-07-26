@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Internships</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <nav>
+        <a href="/dashboardcompany.html">Home</a>
+        <a href="/profilecompany.html">Profile</a>
+        <a href="/logout">Logout</a>
+    </nav>
+
+    <h1>Manage Internships</h1>
+
+    <div id="search-form">
+        <form id="internship-search-form">
+            <label>Location: <input type="text" name="location"></label>
+            <label>Skills: <input type="text" name="skills"></label>
+            <label>Min Salary: <input type="number" name="salary"></label>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <div id="internship-list">
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Location</th>
+                    <th>Type</th>
+                    <th>Skills</th>
+                    <th>Salary</th>
+                    <th>Duration</th>
+                    <th>Deadline</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="internship-table-body"></tbody>
+        </table>
+    </div>
+
+    <script>
+        function loadInternships() {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', '/list_internships_company', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const internships = JSON.parse(xhr.responseText);
+                    const tableBody = document.getElementById('internship-table-body');
+                    tableBody.innerHTML = '';
+                    internships.forEach(internship => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${internship.title}</td>
+                            <td>${internship.location}</td>
+                            <td>${internship.type}</td>
+                            <td>${internship.skills}</td>
+                            <td>${internship.salary}</td>
+                            <td>${internship.duration}</td>
+                            <td>${internship.deadline}</td>
+                            <td>
+                                <button onclick="editInternship(${internship.internship_id})">Edit</button>
+                                <button onclick="deleteInternship(${internship.internship_id})">Delete</button>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                } else if (xhr.readyState === 4) {
+                    alert('Error loading internships');
+                }
+            };
+            xhr.send();
+        }
+
+        function editInternship(internshipId) {
+            window.location.href = `/editinternship.html?internship_id=${internshipId}`;
+        }
+
+        function deleteInternship(internshipId) {
+            if (!confirm('Are you sure you want to delete this internship?')) return;
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/delete_internship', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    alert('Internship deleted!');
+                    loadInternships();
+                } else if (xhr.readyState === 4) {
+                    alert('Error deleting internship');
+                }
+            };
+            xhr.send(`internship_id=${internshipId}`);
+        }
+
+        document.getElementById('internship-search-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const searchParams = new URLSearchParams();
+            for (const [key, value] of formData) {
+                if (value) searchParams.append(key, value);
+            }
+            const xhr = new XMLHttpRequest();
+           xhr.open('POST', '/search_internships', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const internships = JSON.parse(xhr.responseText);
+                    const tableBody = document.getElementById('internship-table-body');
+                    tableBody.innerHTML = '';
+                    internships.forEach(internship => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${internship.title}</td>
+                            <td>${internship.location}</td>
+                            <td>${internship.type}</td>
+                            <td>${internship.skills}</td>
+                            <td>${internship.salary}</td>
+                            <td>${internship.duration}</td>
+                            <td>${internship.deadline}</td>
+                            <td>
+                                <button onclick="editInternship(${internship.internship_id})">Edit</button>
+                                <button onclick="deleteInternship(${internship.internship_id})">Delete</button>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                } else if (xhr.readyState === 4) {
+                    alert('Error searching internships');
+                }
+            };
+            xhr.send(searchParams.toString());
+        });
+
+        window.onload = loadInternships;
+    </script>
+</body>
+</html>

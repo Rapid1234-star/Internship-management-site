@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Post New Internship - Internship Portal</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <header>
+    <h2 class="section-heading">Post New Internship</h2>
+  </header>
+<nav>
+    <a href="dashboardcompany.html">Home</a>
+    <a href="profilecompany.html">Profile</a>
+    <a href="login.html">Logout</a>
+  </nav>
+
+  <main class="form-container">
+    <form action="/newinternshipcompany" method="POST">
+      <label for="title">Internship Title</label>
+      <input type="text" id="title" name="title" placeholder="e.g. Software Developer Intern" required>
+
+      <label for="location">Location</label>
+      <input type="text" id="location" name="location" placeholder="e.g. Dubai / Remote" required>
+
+      <label for="type">Type</label>
+      <input type="text" id="type" name="type" placeholder="e.g. Remote / On-Site" required>
+
+      <label for="skills">Required Skills</label>
+      <input type="text" id="skills" name="skills" placeholder="e.g. JavaScript, Node.js" required>
+
+      <label for="salary">Salary</label>
+      <input type="text" id="salary" name="salary" placeholder="e.g. AED 2000/month">
+
+      <label for="duration">Duration</label>
+      <input type="text" id="duration" name="duration" placeholder="e.g. 3 months">
+
+      <label for="deadline">Application Deadline</label>
+      <input type="text" id="deadline" name="deadline" placeholder="e.g. 30 June 2025" required>
+
+      <label for="description">Internship Description</label>
+      <textarea id="description" name="description" rows="5" placeholder="Write a detailed description..." required></textarea>
+
+      <button type="submit" class="btn">Submit Internship</button>
+    </form>
+  </main>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
