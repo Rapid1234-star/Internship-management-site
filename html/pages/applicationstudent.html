@@ -1,50 +1,143 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>My Applications</title>
-    <link rel="stylesheet" href="../css/styles.css">
-</head>
-<body>
-    <nav>
-        <ul>
-            <li><a href="/dashboardstudent.html">Home</a></li>
-            <li><a href="/profilestudent.html">Profile</a></li>
-            <li><a href="/logout">Logout</a></li>
-        </ul>
-    </nav>
-    <h1 class="section-heading">My Applications</h1>
-    <div id="applicationList" class="internship-list"></div>
-    <script src="/js/main.js"></script>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Applications - Student Portal</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <nav class="nav">
+          <div class="nav-container">
+            <a href="/dashboardstudent.html" class="nav-brand"
+              >Internship Portal</a
+            >
+            <ul class="nav-links">
+              <li>
+                <a href="/dashboardstudent.html" class="nav-link">Dashboard</a>
+              </li>
+              <li>
+                <a href="/profilestudent.html" class="nav-link">Profile</a>
+              </li>
+              <li><a href="/logout" class="nav-link">Logout</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="section-heading">
+        <h1>My Applications</h1>
+        <p>Track the status of your internship applications</p>
+      </div>
+
+      <div id="applicationList" class="internships-grid">
+        <div class="loading-card">
+          <div class="loading"></div>
+          <p>Loading your applications...</p>
+        </div>
+      </div>
+    </main>
+
+    <script src="../js/main.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            fetch('/list_applications_student')
-                .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok');
-                    return response.json();
-                })
-                .then(data => {
-                    const list = document.getElementById('applicationList');
-                    if (data.length === 0) {
-                        list.innerHTML = '<p>No applications found</p>';
-                    } else {
-                        list.innerHTML = data.map(app => `
-                            <div class="internship-card">
-                                <h3>${app.title}</h3>
-                                <p>Company: ${app.company_name}</p>
-                                <p>Applied On: ${app.applied_on}</p>
-                                <p>Status: ${app.status}</p>
+      document.addEventListener("DOMContentLoaded", () => {
+        loadApplications();
+      });
+
+      function loadApplications() {
+        fetch("/list_applications_student")
+          .then((response) => {
+            if (!response.ok) throw new Error("Network response was not ok");
+            return response.json();
+          })
+          .then((data) => {
+            const list = document.getElementById("applicationList");
+            if (data.length === 0) {
+              list.innerHTML = `
+                            <div class="empty-state">
+                                <h3>No applications found</h3>
+                                <p>You haven't applied to any internships yet. <a href="/internshipstudent.html" class="text-link">Browse available internships</a> to get started!</p>
                             </div>
-                        `).join('');
-                    }
-                })
-                .catch(error => {
-                    if (error.message.includes('Network response')) {
-                        alert('Error loading applications: Please check your session or try again');
-                    } else {
-                        alert('Error loading applications: ' + error.message);
-                    }
-                });
-        });
+                        `;
+            } else {
+              list.innerHTML = data
+                .map(
+                  (app) => `
+                            <div class="internship-card">
+                                <div class="internship-header">
+                                    <h3>${app.title}</h3>
+                                    <div class="internship-badges">
+                                        ${getStatusBadge(app.status)}
+                                    </div>
+                                </div>
+                                <div class="internship-details">
+                                    <p><strong>Company:</strong> ${
+                                      app.company_name
+                                    }</p>
+                                    <p><strong>Applied On:</strong> ${
+                                      app.applied_on
+                                    }</p>
+                                    <p><strong>Status:</strong> ${
+                                      app.status
+                                    }</p>
+                                </div>
+                                <div class="internship-actions">
+                                    <button class="btn btn-outline btn-sm" onclick="viewApplication(${
+                                      app.application_id
+                                    })">View Details</button>
+                                    ${
+                                      app.status === "Pending"
+                                        ? `<button class="btn btn-ghost btn-sm" onclick="withdrawApplication(${app.application_id})">Withdraw</button>`
+                                        : ""
+                                    }
+                                </div>
+                            </div>
+                        `
+                )
+                .join("");
+            }
+          })
+          .catch((error) => {
+            const list = document.getElementById("applicationList");
+            list.innerHTML = `
+                        <div class="error-state">
+                            <h3>Error loading applications</h3>
+                            <p>Please try again later or contact support if the problem persists.</p>
+                        </div>
+                    `;
+          });
+      }
+
+      function getStatusBadge(status) {
+        const statusMap = {
+          Pending: "badge badge-warning",
+          Accepted: "badge badge-success",
+          Rejected: "badge badge-error",
+        };
+        const badgeClass = statusMap[status] || "badge badge-warning";
+        return `<span class="${badgeClass}">${status}</span>`;
+      }
+
+      function viewApplication(applicationId) {
+        // This would typically open a modal or navigate to a details page
+        alert("View application details for ID: " + applicationId);
+      }
+
+      function withdrawApplication(applicationId) {
+        if (
+          !confirm(
+            "Are you sure you want to withdraw this application? This action cannot be undone."
+          )
+        )
+          return;
+
+        // This would typically make an API call to withdraw the application
+        alert("Withdraw application for ID: " + applicationId);
+      }
     </script>
-</body>
+  </body>
 </html>

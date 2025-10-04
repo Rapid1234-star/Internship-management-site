@@ -11,6 +11,7 @@ http.createServer((req, res) => {
     var body = ''; req.on('data', chunk => body += chunk.toString()); req.on('end', () => {
         body = querystring.parse(body); var pathname = url.parse(req.url).pathname; var query = url.parse(req.url, true).query;
         if (pathname.startsWith('/css/')) { fs.readFile(path.join(__dirname, 'html', pathname), (err, data) => { if (err) { res.writeHead(404, {'Content-Type': 'text/plain'}); res.end('404 Not Found'); } else { res.writeHead(200, {'Content-Type': 'text/css'}); res.end(data); } }); return; }
+        if (pathname.startsWith('/js/')) { fs.readFile(path.join(__dirname, 'html', pathname), (err, data) => { if (err) { res.writeHead(404, {'Content-Type': 'text/plain'}); res.end('404 Not Found'); } else { res.writeHead(200, {'Content-Type': 'application/javascript'}); res.end(data); } }); return; }
         if (pathname.endsWith('.html') && pathname !== '/index.html') { fs.readFile(path.join(__dirname, 'html', 'pages', pathname), (err, data) => { if (err) myModule.login(res); else { res.writeHead(200, {'Content-Type': 'text/html'}); res.end(data); } }); return; }
         if (pathname === '/company_signup' && req.method === 'POST') auth.signupCompany(res, body, mySess);
         else if (pathname === '/student_signup' && req.method === 'POST') auth.signupStudent(res, body, mySess);

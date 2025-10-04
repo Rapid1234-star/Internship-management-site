@@ -1,27 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Student Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Internship Management System</title>
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="/dashboardstudent.html">Home</a></li>
-            <li><a href="/profilestudent.html">Profile</a></li>
-            <li><a href="/logout">Logout</a></li>
-        </ul>
-    </nav>
-    <h1 class="section-heading">Dashboard</h1>
-    <div class="internship-list">
-        <div class="internship-card">
-            <h2>Manage Internships</h2>
-            <a href="/internshipstudent.html" class="btn">Go</a>
+    <header>
+        <div class="header-container">
+            <nav class="nav">
+                <div class="nav-container">
+                    <a href="/dashboardstudent.html" class="nav-brand">Internship Portal</a>
+                    <ul class="nav-links">
+                        <li><a href="/dashboardstudent.html" class="nav-link">Dashboard</a></li>
+                        <li><a href="/profilestudent.html" class="nav-link">Profile</a></li>
+                        <li><a href="/logout" class="nav-link">Logout</a></li>
+                    </ul>
+                </div>
+            </nav>
         </div>
-        <div class="internship-card">
-            <h2>View Applications</h2>
-            <a href="/applicationstudent.html" class="btn">Go</a>
+    </header>
+
+    <main>
+        <div class="section-heading">
+            <h1>Welcome to Your Dashboard</h1>
+            <p>Manage your internship applications and discover new opportunities</p>
         </div>
-    </div>
+
+        <div class="internships-grid">
+            <div class="card">
+                <div class="card-icon">🎯</div>
+                <h3>Browse Internships</h3>
+                <p>Discover exciting internship opportunities that match your skills and career goals. Filter by location, skills, and salary to find the perfect match.</p>
+                <div class="mt-4">
+                    <span class="badge badge-success">New Opportunities</span>
+                </div>
+                <div class="mt-4">
+                    <a href="/internshipstudent.html" class="btn btn-primary">Explore Internships</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">📋</div>
+                <h3>My Applications</h3>
+                <p>Track all your internship applications in one place. Monitor application status, receive updates, and manage your application timeline.</p>
+                <div class="mt-4">
+                    <span class="badge badge-warning">Track Progress</span>
+                </div>
+                <div class="mt-4">
+                    <a href="/applicationstudent.html" class="btn btn-primary">View Applications</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">👤</div>
+                <h3>My Profile</h3>
+                <p>Update your profile information, skills, and preferences to help companies find you and match you with relevant opportunities.</p>
+                <div class="mt-4">
+                    <span class="badge badge-success">Keep Updated</span>
+                </div>
+                <div class="mt-4">
+                    <a href="/profilestudent.html" class="btn btn-outline">Edit Profile</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/main.js"></script>
 </body>
 </html>

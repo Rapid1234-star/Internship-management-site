@@ -2,40 +2,74 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Internship Portal - Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internship Management System</title>
   <link rel="stylesheet" href="../css/styles.css">
   <style>
-    img{
-      width: 250px;
+    img {
+      max-width: 100%;
       height: auto;
-      display: block;
-      margin: 0 auto;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
     }
   </style>
 </head>
 <body>
   <header>
-    <h1 class="welcome-text">Welcome to the Internship Portal</h1>
-    <p class="subheading">Find your perfect opportunity</p>
-    <div class="auth-buttons">
-      <a href="student.html" class="btn">Student</a>
-      <a href="company.html" class="btn">Admistrator</a>
+    <div class="header-container">
+      <div class="welcome-section">
+        <h1>Welcome to the Internship Management System</h1>
+        <p>Connecting students with opportunities through innovative technology and seamless experiences</p>
+        <div class="auth-buttons">
+          <a href="student.html" class="btn btn-primary btn-lg">Student Portal</a>
+          <a href="company.html" class="btn btn-secondary btn-lg">Administrator Portal</a>
+        </div>
+      </div>
     </div>
   </header>
+
   <main>
     <section>
-      <h2 class="section-heading">Featured Internships</h2>
-      <div class="internship-list">
+      <div class="section-heading">
+        <h2>Featured Internships</h2>
+        <p>Discover exciting opportunities that match your skills and career aspirations</p>
+      </div>
+      <div class="internships-grid">
         <div class="internship-card">
-          <h3 class="internship-title">Web Developer Intern</h3>
-          <p class="internship-location">Dubai</p>
+          <h3>Web Developer Intern</h3>
+          <p>Join our team to develop cutting-edge web applications using modern technologies like React, Node.js, and cloud platforms. You'll work alongside experienced developers and contribute to real-world projects.</p>
+          <div class="mt-4">
+            <span class="badge badge-success">Remote Available</span>
+            <span class="badge badge-warning">Dubai</span>
+          </div>
+          <div class="mt-4">
+            <a href="#" class="btn btn-primary">Learn More</a>
+            <a href="#" class="btn btn-outline">Apply Now</a>
+          </div>
         </div>
         <div class="internship-card">
-          <h3 class="internship-title">Marketing Intern</h3>
-          <p class="internship-location">Abu Dhabi</p>
+          <h3>Marketing Intern</h3>
+          <p>Help us create compelling marketing campaigns and grow our brand presence across digital platforms. You'll gain hands-on experience with social media, content creation, and analytics tools.</p>
+          <div class="mt-4">
+            <span class="badge badge-success">Full-time</span>
+            <span class="badge badge-warning">Abu Dhabi</span>
+          </div>
+          <div class="mt-4">
+            <a href="#" class="btn btn-primary">Learn More</a>
+            <a href="#" class="btn btn-outline">Apply Now</a>
+          </div>
+        </div>
+        <div class="internship-card">
+          <h3>Data Science Intern</h3>
+          <p>Dive into the world of data analysis and machine learning. Work with large datasets, create predictive models, and help drive data-driven decision making across the organization.</p>
+          <div class="mt-4">
+            <span class="badge badge-success">Hybrid</span>
+            <span class="badge badge-warning">Dubai</span>
+          </div>
+          <div class="mt-4">
+            <a href="#" class="btn btn-primary">Learn More</a>
+            <a href="#" class="btn btn-outline">Apply Now</a>
+          </div>
         </div>
       </div>
     </section>

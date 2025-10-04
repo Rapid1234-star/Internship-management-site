@@ -1,32 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Company Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Dashboard - Internship Management System</title>
     <link rel="stylesheet" href="../css/styles.css">
-   
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="/dashboardcompany.html">Home</a></li>
-            <li><a href="/profilecompany.html">Profile</a></li>
-            <li><a href="/logout">Logout</a></li>
-        </ul>
-    </nav>
-    <h1 class="section-heading">Dashboard</h1>
-    <div class="internship-list">
-        <div class="internship-card">
-            <h2>Post New Internship</h2>
-            <a href="/newinternshipcompany.html" class="btn">Go</a>
+    <header>
+        <div class="header-container">
+            <nav class="nav">
+                <div class="nav-container">
+                    <a href="/dashboardcompany.html" class="nav-brand">Internship Portal</a>
+                    <ul class="nav-links">
+                        <li><a href="/dashboardcompany.html" class="nav-link">Dashboard</a></li>
+                        <li><a href="/profilecompany.html" class="nav-link">Profile</a></li>
+                        <li><a href="/logout" class="nav-link">Logout</a></li>
+                    </ul>
+                </div>
+            </nav>
         </div>
-        <div class="internship-card">
-            <h2>Manage Internships</h2>
-            <a href="/internshipcompany.html" class="btn">Go</a>
+    </header>
+
+    <main>
+        <div class="section-heading">
+            <h1>Company Dashboard</h1>
+            <p>Manage your internship programs and connect with talented students</p>
         </div>
-        <div class="internship-card">
-            <h2>View Applications</h2>
-            <a href="/applicationcompany.html" class="btn">Go</a>
+
+        <div class="internships-grid">
+            <div class="card">
+                <div class="card-icon">➕</div>
+                <h3>Post New Internship</h3>
+                <p>Create and publish new internship opportunities. Set requirements, deadlines, and attract qualified candidates to your organization.</p>
+                <div class="mt-4">
+                    <span class="badge badge-success">Create New</span>
+                </div>
+                <div class="mt-4">
+                    <a href="/newinternshipcompany.html" class="btn btn-primary">Post Internship</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">📊</div>
+                <h3>Manage Internships</h3>
+                <p>View and manage all your active internship postings. Edit details, update requirements, and monitor application activity.</p>
+                <div class="mt-4">
+                    <span class="badge badge-warning">Active Listings</span>
+                </div>
+                <div class="mt-4">
+                    <a href="/internshipcompany.html" class="btn btn-primary">Manage Listings</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">👥</div>
+                <h3>View Applications</h3>
+                <p>Review and manage student applications. Screen candidates, schedule interviews, and make hiring decisions efficiently.</p>
+                <div class="mt-4">
+                    <span class="badge badge-success">New Applications</span>
+                </div>
+                <div class="mt-4">
+                    <a href="/applicationcompany.html" class="btn btn-primary">Review Applications</a>
+                </div>
+            </div>
         </div>
-    </div>
+
+    </main>
+
+    <script src="../js/main.js"></script>
 </body>
 </html>

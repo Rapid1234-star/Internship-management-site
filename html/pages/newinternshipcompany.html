@@ -1,56 +1,216 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Post New Internship</title>
-    <link rel="stylesheet" href="../css/styles.css">
-</head>
-<body>
-    <nav>
-        <ul>
-            <li><a href="/dashboardcompany.html">Home</a></li>
-            <li><a href="/profilecompany.html">Profile</a></li>
-            <li><a href="/logout">Logout</a></li>
-        </ul>
-    </nav>
-    <h1 class="section-heading">Post New Internship</h1>
-    <div class="form-container">
-        <form action="/create_internship" method="POST" onsubmit="return validateForm()">
-            <label for="title">Internship Title:</label>
-            <input type="text" name="title" id="title">
-            <label for="location">Location:</label>
-            <input type="text" name="location" id="location">
-            <label for="type">Type:</label>
-            <input type="text" name="type" id="type">
-            <label for="skills">Required Skills:</label>
-            <input type="text" name="skills" id="skills">
-            <label for="salary">Salary:</label>
-            <input type="number" name="salary" id="salary" step="0.01">
-            <label for="duration">Duration:</label>
-            <input type="text" name="duration" id="duration">
-            <label for="deadline">Application Deadline:</label>
-            <input type="date" name="deadline" id="deadline">
-            <button type="submit">Submit Internship</button>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Post New Internship - Company Portal</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <nav class="nav">
+          <div class="nav-container">
+            <a href="/dashboardcompany.html" class="nav-brand"
+              >Internship Portal</a
+            >
+            <ul class="nav-links">
+              <li>
+                <a href="/dashboardcompany.html" class="nav-link">Dashboard</a>
+              </li>
+              <li>
+                <a href="/profilecompany.html" class="nav-link">Profile</a>
+              </li>
+              <li><a href="/logout" class="nav-link">Logout</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="section-heading">
+        <h1>Post New Internship</h1>
+        <p>Create an attractive internship posting to attract top talent</p>
+      </div>
+
+      <div class="form-container">
+        <div class="form-header">
+          <h2>Internship Details</h2>
+          <p>Fill in the details below to create your internship posting</p>
+        </div>
+
+        <form
+          action="/create_internship"
+          method="POST"
+          onsubmit="return validateForm()"
+          class="internship-form"
+        >
+          <div class="form-row">
+            <div class="form-group">
+              <label for="title" class="form-label">Internship Title *</label>
+              <input
+                type="text"
+                name="title"
+                id="title"
+                class="form-input"
+                placeholder="e.g., Software Development Intern"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="type" class="form-label">Internship Type *</label>
+              <select name="type" id="type" class="form-input" required>
+                <option value="">Select type</option>
+                <option value="Full-time">Full-time</option>
+                <option value="Part-time">Part-time</option>
+                <option value="Remote">Remote</option>
+                <option value="Hybrid">Hybrid</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="location" class="form-label">Location *</label>
+              <input
+                type="text"
+                name="location"
+                id="location"
+                class="form-input"
+                placeholder="e.g., Dubai, UAE"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="salary" class="form-label"
+                >Monthly Salary (AED) *</label
+              >
+              <input
+                type="number"
+                name="salary"
+                id="salary"
+                class="form-input"
+                placeholder="Enter salary amount"
+                step="0.01"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="skills" class="form-label">Required Skills *</label>
+            <input
+              type="text"
+              name="skills"
+              id="skills"
+              class="form-input"
+              placeholder="e.g., JavaScript, Python, React, Communication"
+              required
+            />
+            <small class="form-help"
+              >Separate multiple skills with commas</small
+            >
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="duration" class="form-label">Duration *</label>
+              <input
+                type="text"
+                name="duration"
+                id="duration"
+                class="form-input"
+                placeholder="e.g., 3 months, 6 months"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="deadline" class="form-label"
+                >Application Deadline *</label
+              >
+              <input
+                type="date"
+                name="deadline"
+                id="deadline"
+                class="form-input"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="description" class="form-label">Job Description</label>
+            <textarea
+              name="description"
+              id="description"
+              class="form-input"
+              rows="4"
+              placeholder="Describe the internship role, responsibilities, and what the intern will learn..."
+            ></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-lg">
+              Post Internship
+            </button>
+            <a href="/dashboardcompany.html" class="btn btn-ghost">Cancel</a>
+          </div>
         </form>
-        <p id="status" style="color: red;"></p>
-    </div>
-    <script src="/js/main.js"></script>
+
+        <div id="status" class="form-status"></div>
+      </div>
+    </main>
+
+    <script src="../js/main.js"></script>
     <script>
-        function validateForm() {
-            const fields = ['title', 'location', 'type', 'skills', 'salary', 'duration', 'deadline'];
-            const status = document.getElementById('status');
-            for (let field of fields) {
-                if (!document.getElementById(field).value) {
-                    status.textContent = 'All fields are required';
-                    return false;
-                }
-            }
-            if (isNaN(document.getElementById('salary').value) || document.getElementById('salary').value <= 0) {
-                status.textContent = 'Salary must be a positive number';
-                return false;
-            }
-            status.textContent = '';
-            return true;
+      function validateForm() {
+        const fields = [
+          "title",
+          "location",
+          "type",
+          "skills",
+          "salary",
+          "duration",
+          "deadline",
+        ];
+        const status = document.getElementById("status");
+
+        // Clear previous status
+        status.innerHTML = "";
+        status.className = "form-status";
+
+        for (let field of fields) {
+          const element = document.getElementById(field);
+          if (!element.value.trim()) {
+            status.innerHTML = `<div class="alert alert-error">All required fields must be filled</div>`;
+            status.className = "form-status error";
+            element.focus();
+            return false;
+          }
         }
+
+        const salary = parseFloat(document.getElementById("salary").value);
+        if (isNaN(salary) || salary <= 0) {
+          status.innerHTML = `<div class="alert alert-error">Salary must be a positive number</div>`;
+          status.className = "form-status error";
+          document.getElementById("salary").focus();
+          return false;
+        }
+
+        const deadline = new Date(document.getElementById("deadline").value);
+        const today = new Date();
+        if (deadline <= today) {
+          status.innerHTML = `<div class="alert alert-error">Deadline must be in the future</div>`;
+          status.className = "form-status error";
+          document.getElementById("deadline").focus();
+          return false;
+        }
+
+        status.innerHTML = `<div class="alert alert-success">Validating form...</div>`;
+        status.className = "form-status success";
+        return true;
+      }
     </script>
-</body>
+  </body>
 </html>

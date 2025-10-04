@@ -1,42 +1,161 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Apply for Internship</title>
-    <link rel="stylesheet" href="../css/styles.css">
-</head>
-<body>
-    <nav>
-        <ul>
-            <li><a href="/dashboardstudent.html">Home</a></li>
-            <li><a href="/profilestudent.html">Profile</a></li>
-            <li><a href="/logout">Logout</a></li>
-        </ul>
-    </nav>
-    <h1 class="section-heading">Apply for Internship</h1>
-    <div class="form-container">
-        <form action="/apply_internship" method="POST" onsubmit="return validateForm()">
-            <input type="hidden" name="internship_id" id="internship_id">
-            <label for="resume">Resume:</label>
-            <input type="file" name="resume" id="resume" required>
-            <button type="submit">Submit Application</button>
-        </form>
-    </div>
-    <script src="/js/main.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            document.getElementById('internship_id').value = urlParams.get('internship_id') || '';
-        });
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Apply for Internship - Student Portal</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <nav class="nav">
+          <div class="nav-container">
+            <a href="/dashboardstudent.html" class="nav-brand"
+              >Internship Portal</a
+            >
+            <ul class="nav-links">
+              <li>
+                <a href="/dashboardstudent.html" class="nav-link">Dashboard</a>
+              </li>
+              <li>
+                <a href="/profilestudent.html" class="nav-link">Profile</a>
+              </li>
+              <li><a href="/logout" class="nav-link">Logout</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
 
-        function validateForm() {
-            const resume = document.getElementById('resume').value;
-            const internshipId = document.getElementById('internship_id').value;
-            if (!resume || !internshipId) {
-                alert('Resume and internship ID are required');
-                return false;
-            }
-            return true;
+    <main>
+      <div class="section-heading">
+        <h1>Apply for Internship</h1>
+        <p>Submit your application for this exciting internship opportunity</p>
+      </div>
+
+      <div class="form-container">
+        <div class="form-header">
+          <h2>Application Details</h2>
+          <p>Please upload your resume and submit your application</p>
+        </div>
+
+        <form
+          action="/apply_internship"
+          method="POST"
+          onsubmit="return validateForm()"
+          class="application-form"
+          enctype="multipart/form-data"
+        >
+          <input type="hidden" name="internship_id" id="internship_id" />
+
+          <div class="form-group">
+            <label for="resume" class="form-label">Resume/CV *</label>
+            <input
+              type="file"
+              name="resume"
+              id="resume"
+              class="form-input"
+              accept=".pdf,.doc,.docx"
+              required
+            />
+            <small class="form-help"
+              >Upload your resume in PDF, DOC, or DOCX format (Max 5MB)</small
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="cover_letter" class="form-label"
+              >Cover Letter (Optional)</label
+            >
+            <textarea
+              name="cover_letter"
+              id="cover_letter"
+              class="form-input"
+              rows="4"
+              placeholder="Write a brief cover letter explaining why you're interested in this internship..."
+            ></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-lg">
+              Submit Application
+            </button>
+            <a href="/internshipstudent.html" class="btn btn-ghost">Cancel</a>
+          </div>
+        </form>
+
+        <div id="status" class="form-status"></div>
+      </div>
+    </main>
+
+    <script src="../js/main.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const internshipId = urlParams.get("internship_id");
+        document.getElementById("internship_id").value = internshipId || "";
+
+        if (!internshipId) {
+          showError(
+            "No internship selected. Please go back and select an internship to apply for."
+          );
+          return;
         }
+      });
+
+      function validateForm() {
+        const resume = document.getElementById("resume");
+        const internshipId = document.getElementById("internship_id").value;
+        const status = document.getElementById("status");
+
+        // Clear previous status
+        status.innerHTML = "";
+        status.className = "form-status";
+
+        if (!internshipId) {
+          showError(
+            "No internship selected. Please go back and select an internship to apply for."
+          );
+          return false;
+        }
+
+        if (!resume.files || resume.files.length === 0) {
+          showError("Please select a resume file to upload.");
+          resume.focus();
+          return false;
+        }
+
+        // Check file size (5MB limit)
+        const file = resume.files[0];
+        if (file.size > 5 * 1024 * 1024) {
+          showError("File size must be less than 5MB.");
+          resume.focus();
+          return false;
+        }
+
+        // Check file type
+        const allowedTypes = [
+          "application/pdf",
+          "application/msword",
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        ];
+        if (!allowedTypes.includes(file.type)) {
+          showError("Please upload a PDF, DOC, or DOCX file.");
+          resume.focus();
+          return false;
+        }
+
+        status.innerHTML = `<div class="alert alert-success">Validating application...</div>`;
+        status.className = "form-status success";
+        return true;
+      }
+
+      function showError(message) {
+        const status = document.getElementById("status");
+        status.innerHTML = `<div class="alert alert-error">${message}</div>`;
+        status.className = "form-status error";
+      }
     </script>
-</body>
+  </body>
 </html>

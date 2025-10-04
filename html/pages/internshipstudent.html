@@ -1,46 +1,124 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Available Internships</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Internships - Student Portal</title>
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="/dashboardstudent.html">Home</a></li>
-            <li><a href="/profilestudent.html">Profile</a></li>
-            <li><a href="/logout">Logout</a></li>
-        </ul>
-    </nav>
-    <h1 class="section-heading">Available Internships</h1>
-    <div class="search-container">
-        <form action="/search_internships" method="POST" id="filterForm">
-            <label>Location: <input type="text" name="location"></label><br>
-            <label>Skills: <input type="text" name="skills"></label><br>
-            <label>Min Salary: <input type="number" name="salary" step="0.01"></label><br>
-            <button type="submit">Search</button>
-        </form>
-    </div>
-    <div id="internshipList" class="internship-list"></div>
-    <script src="/js/main.js"></script>
+    <header>
+        <div class="header-container">
+            <nav class="nav">
+                <div class="nav-container">
+                    <a href="/dashboardstudent.html" class="nav-brand">Internship Portal</a>
+                    <ul class="nav-links">
+                        <li><a href="/dashboardstudent.html" class="nav-link">Dashboard</a></li>
+                        <li><a href="/profilestudent.html" class="nav-link">Profile</a></li>
+                        <li><a href="/logout" class="nav-link">Logout</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="section-heading">
+            <h1>Available Internships</h1>
+            <p>Discover exciting internship opportunities that match your skills and career goals</p>
+        </div>
+
+        <div class="search-container">
+            <form action="/search_internships" method="POST" id="filterForm" class="search-form">
+                <div class="search-filters">
+                    <div class="form-group">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" id="location" name="location" class="form-input" placeholder="Enter city or country">
+                    </div>
+                    <div class="form-group">
+                        <label for="skills" class="form-label">Skills</label>
+                        <input type="text" id="skills" name="skills" class="form-input" placeholder="e.g., JavaScript, Python, Marketing">
+                    </div>
+                    <div class="form-group">
+                        <label for="salary" class="form-label">Minimum Salary (AED)</label>
+                        <input type="number" id="salary" name="salary" class="form-input" placeholder="Enter minimum salary" step="0.01">
+                    </div>
+                </div>
+                <div class="search-actions">
+                    <button type="submit" class="btn btn-primary">Search Internships</button>
+                    <button type="button" class="btn btn-ghost" onclick="clearFilters()">Clear Filters</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="internshipList" class="internships-grid">
+            <div class="loading-card">
+                <div class="loading"></div>
+                <p>Loading internships...</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/main.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            loadInternships();
+        });
+
+        function loadInternships() {
             fetch('/list_internships')
                 .then(response => response.json())
                 .then(data => {
                     const list = document.getElementById('internshipList');
-                    list.innerHTML = data.map(intern => `
-                        <div class="internship-card">
-                            <h3>${intern.title}</h3>
-                            <p>Location: ${intern.location}</p>
-                            <p>Skills: ${intern.skills}</p>
-                            <p>Salary: AED ${intern.salary}/month</p>
-                            <a href="/applyinternship.html?internship_id=${intern.internship_id}" class="btn">Apply Now</a>
-                        </div>
-                    `).join('');
+                    if (data.length === 0) {
+                        list.innerHTML = `
+                            <div class="empty-state">
+                                <h3>No internships found</h3>
+                                <p>Try adjusting your search criteria or check back later for new opportunities.</p>
+                            </div>
+                        `;
+                    } else {
+                        list.innerHTML = data.map(intern => `
+                            <div class="internship-card">
+                                <div class="internship-header">
+                                    <h3>${intern.title}</h3>
+                                    <div class="internship-badges">
+                                        <span class="badge badge-success">${intern.type || 'Full-time'}</span>
+                                        <span class="badge badge-warning">${intern.location}</span>
+                                    </div>
+                                </div>
+                                <div class="internship-details">
+                                    <p><strong>Skills Required:</strong> ${intern.skills}</p>
+                                    <p><strong>Salary:</strong> AED ${intern.salary}/month</p>
+                                    <p><strong>Duration:</strong> ${intern.duration || '3-6 months'}</p>
+                                </div>
+                                <div class="internship-actions">
+                                    <a href="/applyinternship.html?internship_id=${intern.internship_id}" class="btn btn-primary">Apply Now</a>
+                                    <button class="btn btn-outline" onclick="viewDetails(${intern.internship_id})">View Details</button>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
                 })
-                .catch(error => alert('Error loading internships'));
-        });
+                .catch(error => {
+                    document.getElementById('internshipList').innerHTML = `
+                        <div class="error-state">
+                            <h3>Error loading internships</h3>
+                            <p>Please try again later or contact support if the problem persists.</p>
+                        </div>
+                    `;
+                });
+        }
+
+        function clearFilters() {
+            document.getElementById('filterForm').reset();
+            loadInternships();
+        }
+
+        function viewDetails(internshipId) {
+            // This would typically open a modal or navigate to a details page
+            alert('View details for internship ID: ' + internshipId);
+        }
     </script>
 </body>
 </html>

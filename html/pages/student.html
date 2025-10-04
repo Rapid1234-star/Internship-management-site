@@ -1,32 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Student Portal</title>
-  <link rel="stylesheet" href="../css/styles.css" />
-</head>
-<body>
-  <header>
-    <h1 class="welcome-text">Welcome, Student</h1>
-    <p class="subheading">Login or Sign Up to access internship opportunities</p>
-    <div class="auth-buttons">
-      <a href="student_login.html" class="btn">Login</a>
-      <a href="student_signup.html" class="btn">Sign Up</a>
-    </div>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Portal - Internship Management System</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <div class="welcome-section">
+          <h1>Welcome, Student</h1>
+          <p>
+            Login or Sign Up to access internship opportunities and start your
+            career journey
+          </p>
+          <div class="auth-buttons">
+            <a href="student_login.html" class="btn btn-primary btn-lg"
+              >Login</a
+            >
+            <a href="student_signup.html" class="btn btn-outline btn-lg"
+              >Sign Up</a
+            >
+          </div>
+        </div>
+      </div>
+    </header>
 
-  <main>
-    <section>
-      <h2 class="section-heading">Why Join?</h2>
-      <ul class="benefits-list">
-        <li>Access verified internship opportunities</li>
-        <li>Track your applications</li>
-        <li>Connect with top companies</li>
-      </ul>
-    </section>
-  </main>
+    <main>
+      <section>
+        <div class="section-heading">
+          <h2>Why Join Our Platform?</h2>
+          <p>
+            Discover the benefits of using our comprehensive internship
+            management system
+          </p>
+        </div>
 
-  <script src="../js/main.js"></script>
-</body>
+        <div class="internships-grid">
+          <div class="card">
+            <h3>🎯 Verified Opportunities</h3>
+            <p>
+              Access a curated list of verified internship opportunities from
+              top companies across various industries. Every listing is
+              thoroughly vetted to ensure quality and legitimacy.
+            </p>
+            <div class="mt-4">
+              <span class="badge badge-success">Quality Assured</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>📊 Application Tracking</h3>
+            <p>
+              Keep track of all your applications in one place. Monitor
+              application status, receive updates, and never miss important
+              deadlines with our comprehensive tracking system.
+            </p>
+            <div class="mt-4">
+              <span class="badge badge-warning">Real-time Updates</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>🤝 Company Connections</h3>
+            <p>
+              Connect directly with hiring managers and HR representatives from
+              leading companies. Build professional relationships that can
+              advance your career.
+            </p>
+            <div class="mt-4">
+              <span class="badge badge-success">Direct Contact</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>💼 Career Development</h3>
+            <p>
+              Access resources, tips, and guidance to help you succeed in your
+              internship applications and professional development journey.
+            </p>
+            <div class="mt-4">
+              <span class="badge badge-warning">Growth Focused</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>🔔 Smart Notifications</h3>
+            <p>
+              Receive personalized notifications about new opportunities that
+              match your skills, interests, and career goals. Never miss the
+              perfect internship again.
+            </p>
+            <div class="mt-4">
+              <span class="badge badge-success">Personalized</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>📈 Analytics & Insights</h3>
+            <p>
+              Get detailed insights into your application performance, market
+              trends, and recommendations to improve your success rate.
+            </p>
+            <div class="mt-4">
+              <span class="badge badge-warning">Data-Driven</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-5">
+          <h3>Ready to Get Started?</h3>
+          <p class="mb-4">
+            Join thousands of students who have found their dream internships
+            through our platform
+          </p>
+          <div class="auth-buttons">
+            <a href="student_signup.html" class="btn btn-primary btn-lg"
+              >Create Account</a
+            >
+            <a href="student_login.html" class="btn btn-ghost"
+              >Already have an account?</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="../js/main.js"></script>
+  </body>
 </html>
